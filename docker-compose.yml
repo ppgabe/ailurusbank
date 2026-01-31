@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres:18.1-alpine
+    restart: always
+    ports:
+      - 5432:5432
+    shm_size: 1024MB
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    secrets:
+      - db-password
+    environment:
+      - POSTGRES_DB=ailurusbank
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
+
+  flyway:
+    image: flyway/flyway
+    environment:
+      - FLYWAY_URL=jdbc:postgresql://db:5432/ailurusbank
+      - FLYWAY_USER=postgres
+      - FLYWAY_LOCATIONS=filesystem:/flyway/migrations
+      - FLYWAY_CONNECT_RETRIES=60
+    entrypoint: >
+      /bin/sh -c 'FLYWAY_PASSWORD=$(cat /run/secrets/db-password) flyway migrate'
+    volumes:
+      - ./db/migration:/flyway/migrations
+    secrets:
+      - db-password
+    depends_on:
+      - db
+
+volumes:
+  db_data:
+secrets:
+  db-password:
+    file: db/password.txt

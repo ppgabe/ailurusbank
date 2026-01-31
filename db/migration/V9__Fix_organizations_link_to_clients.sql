@@ -1,0 +1,1 @@
+ALTER TABLE organizations ADD CONSTRAINT fk_organizations_client_id FOREIGN KEY (id) REFERENCES clients(id);
