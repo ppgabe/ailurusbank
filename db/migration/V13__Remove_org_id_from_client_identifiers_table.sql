@@ -1,0 +1,2 @@
+ALTER TABLE client_identifiers
+DROP COLUMN organization_id;
