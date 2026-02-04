@@ -10,27 +10,24 @@ import static dev.ailuruslabs.ailurusbank.domain.common.validations.Validations.
 public record Account(
     UUID id,
     UUID branchId,
-    String accountNumber,
+    AccountNumber accountNumber,
     String currencyCode,
     BigInteger balanceMinorUnits,
     AccountType type,
     AccountStatus status,
     Instant createdAt
 ) {
-    private final static BigInteger zeroBigInteger = new BigInteger("0");
-
     public Account {
         Objects.requireNonNull(id, "ID cannot be null");
         Objects.requireNonNull(branchId, "Branch ID cannot be null");
 
         Objects.requireNonNull(accountNumber, "Account number cannot be null");
-        failIf(accountNumber.length() > 20, "Account number cannot have a length greater than 20");
 
         Objects.requireNonNull(currencyCode, "Currency code cannot be null");
         failIf(currencyCode.length() != 3, "Currency code must have a length of 3");
 
         Objects.requireNonNull(balanceMinorUnits, "Balance cannot be null");
-        failIf(balanceMinorUnits.compareTo(zeroBigInteger) < 0,
+        failIf(balanceMinorUnits.compareTo(BigInteger.ZERO) < 0,
             "Balance in minor units must be greater than or equal to 0");
 
         Objects.requireNonNull(type, "Type cannot be null");
