@@ -11,25 +11,12 @@ public record Organization(
     UUID id,
     ClientType type,
     Instant createdAt,
-    String name,
-    LocalDate incorporationDate,
-    String countryOfIncorporation
-) implements Client {
+    OrganizationDetails details) implements Client {
 
     public Organization {
-
         Objects.requireNonNull(id, "UUID cannot be null");
         Objects.requireNonNull(type, "Client type cannot be null");
         Objects.requireNonNull(createdAt, "Created at cannot be null");
-        Objects.requireNonNull(name, "Name cannot be null");
-        Objects.requireNonNull(incorporationDate, "Incorporation date cannot be null");
-        Objects.requireNonNull(countryOfIncorporation, "Country of incorporation cannot be null");
-
-        failIf(name.isBlank(), "Name cannot be blank");
-        failIf(countryOfIncorporation.isBlank(), "Country of incorporation cannot be blank");
-
-        failIf(countryOfIncorporation.length() != 2,
-            "Country of incorporation (a nationality code) must be 2 characters long");
     }
 
 }

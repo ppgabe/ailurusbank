@@ -4,18 +4,18 @@ import java.util.Objects;
 
 import static dev.ailuruslabs.ailurusbank.domain.common.validations.Validations.failIf;
 
-public record Country(String code, String iso3, String name, String currencyCode) {
+public record Country(String alpha2, String alpha3, String name, String currencyCode) {
     public Country {
-        Objects.requireNonNull(code, "Code cannot be null");
-        Objects.requireNonNull(iso3, "ISO3 cannot be null");
+        Objects.requireNonNull(alpha2, "Alpha2 cannot be null");
+        Objects.requireNonNull(alpha3, "Alpha3 cannot be null");
         Objects.requireNonNull(name, "Name cannot be null");
-        Objects.requireNonNull(currencyCode, "Currency code cannot be null");
+        Objects.requireNonNull(currencyCode, "Currency alpha2 cannot be null");
 
-        failIf(code.isBlank(), "Code cannot be blank");
-        failIf(code.length() != 2, "Code must have a length of 2");
+        failIf(alpha2.isBlank(), "Alpha2 cannot be blank");
+        failIf(alpha2.length() != 2, "Alpha2 must have a length of 2");
 
-        failIf(iso3.isBlank(), "ISO3 cannot be blank");
-        failIf(iso3.length() != 3, "ISO3 must have a length of 3");
+        failIf(alpha3.isBlank(), "Alpha3 cannot be blank");
+        failIf(alpha3.length() != 3, "Alpha3 must have a length of 3");
 
         failIf(name.isBlank(), "Name cannot be blank");
 

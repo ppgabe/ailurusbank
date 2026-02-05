@@ -5,24 +5,24 @@ import java.util.Objects;
 import static dev.ailuruslabs.ailurusbank.domain.common.validations.Validations.failIf;
 
 public record Currency(
-    String code,
-    String numCode,
+    String alphabeticCode,
+    String numericCode,
     String name,
     int decimals,
     String symbol
 ) {
 
     public Currency {
-        Objects.requireNonNull(code, "Code cannot be null");
-        Objects.requireNonNull(numCode, "Num code cannot be null");
+        Objects.requireNonNull(alphabeticCode, "Alphabetic code cannot be null");
+        Objects.requireNonNull(numericCode, "Numeric code cannot be null");
         Objects.requireNonNull(name, "Name cannot be null");
         Objects.requireNonNull(symbol, "Symbol cannot be null");
 
-        failIf(code.isBlank(), "Code cannot be blank");
-        failIf(code.length() != 3, "Code must have a length of 3");
+        failIf(alphabeticCode.isBlank(), "Alphabetic code cannot be blank");
+        failIf(alphabeticCode.length() != 3, "Alphabetic code must have a length of 3");
 
-        failIf(numCode.isBlank(), "Num code cannot be blank");
-        failIf(numCode.length() != 3, "Num code must be 3 characters long");
+        failIf(numericCode.isBlank(), "Numeric code cannot be blank");
+        failIf(numericCode.length() != 3, "Numeric code must be 3 characters long");
 
         failIf(name.isBlank(), "Name cannot be blank");
 

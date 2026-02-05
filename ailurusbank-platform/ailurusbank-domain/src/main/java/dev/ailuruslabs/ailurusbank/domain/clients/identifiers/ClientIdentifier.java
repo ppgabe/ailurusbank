@@ -4,38 +4,17 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
-import static dev.ailuruslabs.ailurusbank.domain.common.validations.Validations.failIf;
-
 public record ClientIdentifier(
     UUID id,
     UUID clientId,
-    String type,
-    String value,
-    String issuingAuthority,
-    String countryOfJurisdiction,
-    Instant createdAt
+    Instant createdAt,
+    IdentifierDetails details
 ) {
 
     public ClientIdentifier {
         Objects.requireNonNull(id, "ID cannot be null");
         Objects.requireNonNull(clientId, "Client ID cannot be null");
-
-        Objects.requireNonNull(type, "Type cannot be null");
-        failIf(type.isBlank(), "Type cannot be blank");
-
-        Objects.requireNonNull(value, "Value cannot be null");
-        failIf(value.isBlank(), "Value cannot be blank");
-
-        Objects.requireNonNull(issuingAuthority, "Issuing authority cannot be null");
-        failIf(issuingAuthority.isBlank(), "Issuing authority cannot be blank");
-        failIf(issuingAuthority.length() > 20,
-            "Issuing authority cannot have a length greater than 20");
-
-        Objects.requireNonNull(countryOfJurisdiction, "Country of jurisdiction cannot be null");
-        failIf(countryOfJurisdiction.isBlank(), "Country of jurisdiction cannot be blank");
-        failIf(countryOfJurisdiction.length() != 2,
-            "Country of jurisdiction (a country code) must have a length of 2");
-
         Objects.requireNonNull(createdAt, "Creation time cannot be null");
+        Objects.requireNonNull(details);
     }
 }
